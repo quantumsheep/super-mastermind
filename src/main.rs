@@ -111,7 +111,7 @@ fn main() -> Result<(), io::Error> {
         let letters = input.trim();
 
         for letter in letters.chars() {
-            let color = match letter {
+            let color = match letter.to_ascii_uppercase() {
                 'R' => Color::Red,
                 'G' => Color::Green,
                 'B' => Color::Blue,
