@@ -133,7 +133,7 @@ fn mastermind_as_ia(len: u32) {
     println!("Congratulation! Your beat the MasterMind!");
 }
 
-const DEFAULT_COLORS_COUNT: i32 = 4;
+const DEFAULT_COLORS_COUNT: u32 = 4;
 
 fn main() -> Result<(), io::Error> {
     let matches = App::new("MasterMind")
