@@ -7,7 +7,7 @@ use rand::{
 #[allow(non_upper_case_globals)]
 const Orange: Colour = RGB(255, 165, 0);
 
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Clone, Hash, Eq)]
 pub enum Color {
     Red,
     Green,
@@ -62,7 +62,10 @@ impl MasterMind {
         let letters = input.trim();
 
         if letters.len() != self.secret_len {
-            return Err(format!("A minimum of {} colors should be given", self.secret_len));
+            return Err(format!(
+                "A minimum of {} colors should be given",
+                self.secret_len
+            ));
         }
 
         for letter in letters.chars() {
@@ -92,8 +95,8 @@ impl MasterMind {
     pub fn guess(&mut self, combination: &[Color]) -> MasterMindResponse {
         self.tries += 1;
 
-        let good = self.number_of_well_placed_pawns(combination);
-        let wrong = self.number_of_not_well_placed_pawns(combination);
+        let good = Self::number_of_well_placed_pawns(&self.secret, combination);
+        let wrong = Self::number_of_not_well_placed_pawns(&self.secret, combination);
 
         MasterMindResponse {
             guess: combination.to_vec(),
@@ -103,16 +106,16 @@ impl MasterMind {
         }
     }
 
-    fn number_of_well_placed_pawns(&self, combination: &[Color]) -> usize {
-        self.secret
+    pub fn number_of_well_placed_pawns(secret: &[Color], combination: &[Color]) -> usize {
+        secret
             .iter()
             .enumerate()
             .filter(|&(i, color)| combination[i] == *color)
             .count()
     }
 
-    fn number_of_not_well_placed_pawns(&self, combination: &[Color]) -> usize {
-        self.secret_len - self.number_of_well_placed_pawns(combination)
+    pub fn number_of_not_well_placed_pawns(secret: &[Color], combination: &[Color]) -> usize {
+        secret.len() - MasterMind::number_of_well_placed_pawns(secret, combination)
     }
 
     pub fn print_welcome(&self) {
@@ -152,12 +155,40 @@ impl MasterMind {
 
     fn print_possible_colors() {
         println!("{} for {}", Red.bold().paint("R"), Red.bold().paint("Red"));
-        println!("{} for {}", Green.bold().paint("G"), Green.bold().paint("Green"));
-        println!("{} for {}", Blue.bold().paint("B"), Blue.bold().paint("Blue"));
-        println!("{} for {}", Purple.bold().paint("P"), Purple.bold().paint("Purple"));
-        println!("{} for {}", Orange.bold().paint("O"), Orange.bold().paint("Orange"));
-        println!("{} for {}", Yellow.bold().paint("Y"), Yellow.bold().paint("Yellow"));
-        println!("{} for {}", White.bold().paint("W"), White.bold().paint("White"));
-        println!("{} for {}", Cyan.bold().paint("C"), Cyan.bold().paint("Cyan"));
+        println!(
+            "{} for {}",
+            Green.bold().paint("G"),
+            Green.bold().paint("Green")
+        );
+        println!(
+            "{} for {}",
+            Blue.bold().paint("B"),
+            Blue.bold().paint("Blue")
+        );
+        println!(
+            "{} for {}",
+            Purple.bold().paint("P"),
+            Purple.bold().paint("Purple")
+        );
+        println!(
+            "{} for {}",
+            Orange.bold().paint("O"),
+            Orange.bold().paint("Orange")
+        );
+        println!(
+            "{} for {}",
+            Yellow.bold().paint("Y"),
+            Yellow.bold().paint("Yellow")
+        );
+        println!(
+            "{} for {}",
+            White.bold().paint("W"),
+            White.bold().paint("White")
+        );
+        println!(
+            "{} for {}",
+            Cyan.bold().paint("C"),
+            Cyan.bold().paint("Cyan")
+        );
     }
 }
