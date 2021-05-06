@@ -151,7 +151,7 @@ fn main() -> Result<(), io::Error> {
         ])
         .get_matches();
 
-    let len: u32 = matches.value_of_t("len").unwrap_or(DEFAULT_COLORS_COUNT);
+    let len: u32 = matches.value_of_t("len").unwrap();
 
     if matches.is_present("ia") {
         mastermind_as_ia(len);
