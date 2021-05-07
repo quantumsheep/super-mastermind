@@ -80,7 +80,7 @@ pub fn run(len: u32) {
         }
 
         if combinations.is_empty() {
-            panic!("The IA couldn't find the solution");
+            panic!("The AI couldn't find the solution");
         }
 
         combination_index = random_index(combinations.len());

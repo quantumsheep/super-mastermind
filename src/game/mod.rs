@@ -1,2 +1,2 @@
 pub mod as_human;
-pub mod as_ia;
+pub mod as_ai;

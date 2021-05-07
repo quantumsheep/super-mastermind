@@ -15,17 +15,17 @@ fn main() -> Result<(), io::Error> {
                 .about("Sets the length of the hidden composition")
                 .default_value(&DEFAULT_COLORS_COUNT.to_string())
                 .takes_value(true),
-            Arg::new("ia")
-                .long("ia")
+            Arg::new("ai")
+                .long("ai")
                 .short('i')
-                .about("Let an IA solve the game"),
+                .about("Let an AI solve the game"),
         ])
         .get_matches();
 
     let len: u32 = matches.value_of_t("len").unwrap();
 
-    if matches.is_present("ia") {
-        game::as_ia::run(len);
+    if matches.is_present("ai") {
+        game::as_ai::run(len);
     } else {
         game::as_human::run(len)?;
     }
